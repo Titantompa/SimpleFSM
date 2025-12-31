@@ -10,8 +10,17 @@
 
 /////////////////////////////////////////////////////////////////
 
+#ifndef SIMPLEFSM_CALLBACKS_WITH_CONTEXT
+#define SIMPLEFSM_CALLBACKS_WITH_CONTEXT 0
+#endif
+
+#if SIMPLEFSM_CALLBACKS_WITH_CONTEXT
+typedef void (*CallbackFunction)(void *);
+typedef bool (*GuardCondition)(void *);
+#else
 typedef void (*CallbackFunction)();
 typedef bool (*GuardCondition)();
+#endif
 
 /////////////////////////////////////////////////////////////////
 
