@@ -47,7 +47,7 @@ void ongoing() {
 
 State s[] = {
   State("on",   light_on, ongoing, exit_light_on),
-  State("off",  light_off, ongoing, exit_light_off)
+  State("off",  light_off, nullptr, exit_light_off)
 };
 
 enum triggers {
