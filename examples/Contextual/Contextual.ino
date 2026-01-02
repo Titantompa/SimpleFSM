@@ -18,49 +18,43 @@
 
 /////////////////////////////////////////////////////////////////
 
-struct Context
+class ContextualSimpleFSM : public SimpleFSM
 {
+public:
   int light_id;
 };
 
-struct Context contexts[4] = {
-  { .light_id = 1 },
-  { .light_id = 2 },
-  { .light_id = 3 },
-  { .light_id = 4 }
-};
+/////////////////////////////////////////////////////////////////
+
+ContextualSimpleFSM fsm[4] = { ContextualSimpleFSM(), ContextualSimpleFSM(), ContextualSimpleFSM(), ContextualSimpleFSM() };
 
 /////////////////////////////////////////////////////////////////
 
-SimpleFSM fsm[4] = { SimpleFSM(), SimpleFSM(), SimpleFSM(), SimpleFSM() };
-
-/////////////////////////////////////////////////////////////////
-
-void light_on(struct Context* ctx) {
+void light_on(struct ContextualSimpleFSM* ctx) {
   Serial.printf("Light %d: Entering State: ON\n", ctx->light_id);
 }
  
-void light_off(struct Context* ctx) {
+void light_off(struct ContextualSimpleFSM* ctx) {
   Serial.printf("Light %d: Entering State: OFF\n", ctx->light_id);
 }
 
-void exit_light_on(struct Context* ctx) {
+void exit_light_on(struct ContextualSimpleFSM* ctx) {
   Serial.printf("\nLight %d: Leaving State: ON ", ctx->light_id);
 }
  
-void exit_light_off(struct Context* ctx) {
+void exit_light_off(struct ContextualSimpleFSM* ctx) {
   Serial.printf("\nLight %d: Leaving State: OFF", ctx->light_id);
 }
 
-void on_to_off(struct Context* ctx) {
+void on_to_off(struct ContextualSimpleFSM* ctx) {
   Serial.printf("Light %d: ON -> OFF\n", ctx->light_id);
 }
 
-void off_to_on(struct Context* ctx) {
+void off_to_on(struct ContextualSimpleFSM* ctx) {
   Serial.printf("Light %d: OFF -> ON\n", ctx->light_id);  
 }
 
-void ongoing(struct Context* ctx) {
+void ongoing(struct ContextualSimpleFSM* ctx) {
   Serial.printf("%d", ctx->light_id);  
 }
 
@@ -97,7 +91,7 @@ void setup() {
   {
     fsm[i].add(transitions, num_transitions);
     fsm[i].setInitialState(&s[1]);
-    fsm[i].setContext(&contexts[i]);// Light 1
+    fsm[i].light_id = i + 1;
   }
 }
 
@@ -109,7 +103,7 @@ void loop()
   {
     fsm[i].run();
     // flip the switch every 1-4 seconds depending on light id
-    if (fsm[i].lastTransitioned() > (contexts[i].light_id * 1000))
+    if (fsm[i].lastTransitioned() > (fsm[i].light_id * 1000))
     {
       fsm[i].trigger(light_switch_flipped);
     }

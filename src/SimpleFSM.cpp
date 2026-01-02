@@ -6,7 +6,7 @@
 /////////////////////////////////////////////////////////////////
 
 #if SIMPLEFSM_CALLBACKS_WITH_CONTEXT
-#define SIMPLEFSM_OPTIONAL_CONTEXT this->context
+#define SIMPLEFSM_OPTIONAL_CONTEXT this
 #else
 #define SIMPLEFSM_OPTIONAL_CONTEXT
 #endif

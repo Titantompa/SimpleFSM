@@ -42,13 +42,6 @@ class SimpleFSM {
   void setFinishedHandler(CallbackFunction f);
   void setTransitionHandler(CallbackFunction f);
 
-#if SIMPLEFSM_CALLBACKS_WITH_CONTEXT
-  void setContext(void *context)
-  {
-    this->context = context;
-  }
-#endif
-
   bool trigger(int event_id);
   void run(int interval = 1000, CallbackFunction tick_cb = NULL);
   void reset();
@@ -77,9 +70,6 @@ class SimpleFSM {
   State* inital_state = NULL;
   State* current_state = NULL;
   State* prev_state = NULL;
-  #if SIMPLEFSM_CALLBACKS_WITH_CONTEXT
-  void* context = NULL;
-  #endif
   CallbackFunction on_transition_cb = NULL;
   CallbackFunction finished_cb = NULL;
 
