@@ -16,8 +16,8 @@
 #endif
 
 #if SIMPLEFSM_CALLBACKS_WITH_CONTEXT
-typedef void (*CallbackFunction)(void *);
-typedef bool (*GuardCondition)(void *);
+typedef void (*CallbackFunction)(SimpleFSM *);
+typedef bool (*GuardCondition)(SimpleFSM *);
 #else
 typedef void (*CallbackFunction)();
 typedef bool (*GuardCondition)();
